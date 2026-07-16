@@ -1,0 +1,30 @@
+
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30px;
+    margin: 30px;
+    align-items: center;
+}
+
+.nav-link {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(56, 126, 71);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.nav-link:hover{
+    font-weight: 100px;
+    color:rgb(65, 218, 90);
+}
+
+.profile-icon{
+    width:50px;
+    transition: filter 0.2 ease;
+}
+
+.profile-icon:hover{
+    filter:brightness(0.6)
+}
