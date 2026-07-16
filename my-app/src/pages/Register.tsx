@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import supabase from '../lib/supabaseClient'
+import { supabase } from '../lib/supabase'
 
 function Register() {
   const [email, setEmail] = useState<string>('')
