@@ -1,4 +1,4 @@
-import {supabase} from "./subabase";
+import {supabase} from "./supabase";
 
 
 //For sign in
@@ -7,3 +7,4 @@ export async function signIn(email:string,password:string){
     if (error) throw error;
     return data;
 }
+
