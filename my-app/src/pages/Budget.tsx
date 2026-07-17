@@ -30,7 +30,7 @@ export default function Budget() {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar>
       <h2>Budget Goals</h2>
       <input
         type="text"
@@ -46,6 +46,7 @@ export default function Budget() {
       />
       <button onClick={handleSave}>Save Goal</button>
       <Footer/>
+      </Navbar>
     </div>
   )
 }
