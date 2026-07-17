@@ -25,14 +25,17 @@ export default function Dashboard() {
     const [amount, setAmount] = useState<string>("");
     const [date, setDate] = useState<string>(todayISO());
     const [category, setCategory] = useState<string>(CATEGORIES[0]);
+    const [status, setStatus] = useState<string>("");
 
     async function handleAddExpense() {
+        setStatus("");
+
         const {
             data: { user },
         } = await supabase.auth.getUser();
 
         if (!user) {
-            console.error("No logged-in user");
+            setStatus("You must be logged in to add an expense.");
             return;
         }
 
@@ -42,8 +45,9 @@ export default function Dashboard() {
             setAmount("");
             setDate(todayISO());
             setCategory(CATEGORIES[0]);
+            setStatus("Expense added.");
         } catch (error) {
-            console.error(error);
+            setStatus(error instanceof Error ? error.message : "Failed to add expense.");
         }
     }
 
@@ -124,6 +128,7 @@ export default function Dashboard() {
                             <Button onClick={handleAddExpense}>
                                 Add Expense
                             </Button>
+                            {status && <p>{status}</p>}
                         </CardContent>
                     </Card>
                 </div>

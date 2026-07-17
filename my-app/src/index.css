@@ -5,6 +5,7 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
 
+/*Tells css that what .dark class is*/
 @custom-variant dark (&:is(.dark *));
 
 /* FinBro theme — dark-only design:
@@ -34,41 +35,6 @@
   --chart-4:#4c1d95;
   --chart-5:#d8b4fe;
   --radius:0.625rem;
-  --sidebar:#131316;
-  --sidebar-foreground:#ffffff;
-  --sidebar-primary:#6d28d9;
-  --sidebar-primary-foreground:#ffffff;
-  --sidebar-accent:#27272a;
-  --sidebar-accent-foreground:#ffffff;
-  --sidebar-border:oklch(1 0 0 / 10%);
-  --sidebar-ring:#6d28d9;
-}
-
-/* Same values as :root — the design is dark-only, so toggling .dark changes nothing */
-.dark {
-  --background:#050505;
-  --foreground:#ffffff;
-  --card:#131316;
-  --card-foreground:#ffffff;
-  --popover:#131316;
-  --popover-foreground:#ffffff;
-  --primary:#6d28d9;
-  --primary-foreground:#ffffff;
-  --secondary:#27272a;
-  --secondary-foreground:#fafafa;
-  --muted:#27272a;
-  --muted-foreground:#9ca3af;
-  --accent:#27272a;
-  --accent-foreground:#ffffff;
-  --destructive:oklch(0.704 0.191 22.216);
-  --border:oklch(1 0 0 / 10%);
-  --input:oklch(1 0 0 / 15%);
-  --ring:#6d28d9;
-  --chart-1:#6d28d9;
-  --chart-2:#a78bfa;
-  --chart-3:#9ca3af;
-  --chart-4:#4c1d95;
-  --chart-5:#d8b4fe;
   --sidebar:#131316;
   --sidebar-foreground:#ffffff;
   --sidebar-primary:#6d28d9;
@@ -123,6 +89,8 @@
   --radius-4xl:calc(var(--radius) * 2.6);
 }
 
+
+/*These are the global settings*/
 @layer base {
   * {
     @apply border-border outline-ring/50;
