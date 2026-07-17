@@ -1,9 +1,28 @@
+import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Link } from "react-router-dom"
+import { signIn } from '@/lib/auth'
+import { Link,useNavigate } from 'react-router-dom'
 
 export default function Login() {
+
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const navigate = useNavigate()
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleLogin(){
+    try{
+      await signIn(email,password)
+      navigate("/dashboard")
+    }
+    catch(err){
+      setError(err instanceof Error ? err.message : "Something went wrong")
+    }
+  }
+
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background">
       <Card className="w-96 space-y-6 p-8">
@@ -20,11 +39,11 @@ export default function Login() {
         </div>
 
         <div className="space-y-4">
-          <Input type="email" placeholder="Email Address" className="h-10" />
-          <Input type="password" placeholder="Password" className="h-10" />
+        <Input type="email" placeholder="Email Address" className="h-10" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+          <Input type="password" placeholder="Password" className="h-10" value={password} onChange={(e)=>setPassword(e.target.value)}/>
         </div>
 
-        <Button className="h-10 w-full">Log in</Button>
+        <Button onClick={handleLogin} className="h-10 w-full">Log in</Button>
 
         <div className="flex items-center gap-3">
           <div className="h-px flex-1 bg-border" />
@@ -38,6 +57,8 @@ export default function Login() {
             Register
           </Link>
         </p>
+
+        {error && <p className="text-sm text-destructive">{error}</p>}
       </Card>
 
     </div>
