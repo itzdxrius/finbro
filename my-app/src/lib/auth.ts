@@ -1,5 +1,4 @@
 import {supabase} from "./supabase";
-import type { Session } from "@supabase/supabase-js";
 
 
 //For sign in
