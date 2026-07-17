@@ -9,8 +9,6 @@ const Public_Token_URL = 'https://sandbox.plaid.com/sandbox/public_token/create'
 const EXCHANGE_TOKEN_URL = "https://sandbox.plaid.com/item/public_token/exchange";
 // pull from supabase database and call function with it.
 
-
-
 export async function initialize_plaid_account(username, password) {
 	const public_token_post_data = {
 	'client_id': CLIENT_ID,
