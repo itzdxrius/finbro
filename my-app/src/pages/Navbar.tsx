@@ -1,5 +1,6 @@
 import { Link, useNavigate} from "react-router-dom";
 import type {ReactNode} from "react";
+import { signOut } from "../lib/auth";
 import {
     DropdownMenu, 
     DropdownMenuContent,
@@ -24,6 +25,16 @@ import {
 
 export default function Navbar({children}: {children: ReactNode}){
     const navigate = useNavigate();
+
+    async function handleLogOut() {
+        try {
+            await signOut();
+        } catch (error) {
+            console.error(error);
+        }
+        navigate("/login");
+    }
+
     return(
         <SidebarProvider>
             <Sidebar collapsible="icon">
@@ -63,8 +74,8 @@ export default function Navbar({children}: {children: ReactNode}){
                         />
                         <DropdownMenuContent align = "start">
                             <DropdownMenuGroup>
-                                <DropdownMenuItem onClick={() => navigate("/settings")}>Profile</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => navigate("/login")}>Log Out</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => navigate("/setting")}>Profile</DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
                     </DropdownMenu>
