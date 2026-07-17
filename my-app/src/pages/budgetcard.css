@@ -1,0 +1,127 @@
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 2rem 5rem;
+}
+
+.budget-content {
+    display:flex;
+    flex:1 1 0%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@media (min-width: 640px) {
+  .budget-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .budget-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.budget-card-over-limit {
+  background-color: rgb(239 68 68 / 0.05);
+  box-shadow: 0 0 0 1px rgb(239 68 68 / 0.4);
+}
+
+.budget-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding:20px;
+}
+
+.budget-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.budget-card-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.budget-card-icon {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgb(139 92 246 / 0.15);
+  color: rgb(167 139 250);
+}
+
+.budget-card-icon-alert {
+  background-color: rgb(239 68 68 / 0.15);
+  color: rgb(248 113 113);
+}
+
+.budget-card-icon-glyph {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.budget-card-category {
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.budget-card-target {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.budget-card-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.budget-card-badge-ok {
+  color: rgb(52 211 153);
+}
+
+.budget-card-badge-alert {
+  color: rgb(248 113 113);
+}
+
+.budget-card-stats {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.budget-card-amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.budget-card-amount-alert {
+  color: rgb(248 113 113);
+}
+
+.budget-card-percent {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.budget-card-indicator-ok {
+  background-color: rgb(139 92 246);
+}
+
+.budget-card-indicator-warning {
+  background: linear-gradient(to right, rgb(139 92 246), rgb(239 68 68));
+}
+
+.budget-card-indicator-alert {
+  background-color: rgb(239 68 68);
+}
