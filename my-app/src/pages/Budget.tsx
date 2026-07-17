@@ -1,53 +1,62 @@
-
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { useState } from 'react'
-import { supabase } from '../lib/supabase'
-import { saveBudgetGoal } from '../lib/budget'
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import { supabase } from "../lib/supabase"
+import { getBudgets, type Budget } from "../lib/budget"
+import { getSpendingByCategory } from "../lib/transaction"
 
 export default function Budget() {
-  const [category, setCategory] = useState<string>('')
-  const [monthlyLimit, setMonthlyLimit] = useState<string>('')
+  const [budgets, setBudgets] = useState<Budget[]>([])
+  const [spending, setSpending] = useState<Record<string, number>>({})
+  const navigate = useNavigate()
 
-  async function handleSave() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
+  useEffect(() => {
+    async function load() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
 
-    if (!user) {
-      console.error('No logged-in user')
-      return
+      if (!user) return
+
+      try {
+        const [budgetData, spendingData] = await Promise.all([
+          getBudgets(user.id),
+          getSpendingByCategory(user.id),
+        ])
+
+        if (budgetData.length === 0) {
+          navigate("/setting")
+          return
+        }
+
+        setBudgets(budgetData)
+        setSpending(spendingData)
+      } catch (error) {
+        console.error(error)
+      }
     }
 
-    try {
-      await saveBudgetGoal(user.id, category, Number(monthlyLimit))
-      setCategory('')
-      setMonthlyLimit('')
-    } catch (error) {
-      console.error(error)
-    }
-  }
+    load()
+  }, [navigate])
 
   return (
     <div>
       <Navbar>
-      <h2>Budget Goals</h2>
-      <input
-        type="text"
-        placeholder="Category"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Monthly limit"
-        value={monthlyLimit}
-        onChange={(e) => setMonthlyLimit(e.target.value)}
-      />
-      <button onClick={handleSave}>Save Goal</button>
-      <Footer/>
+        <h2>Budgets</h2>
+        {budgets.map((budget) => {
+          const spent = spending[budget.category] ?? 0
+          return (
+            <div key={budget.id}>
+              <p>{budget.category}</p>
+              <p>
+                ${spent.toFixed(2)} of ${budget.monthly_limit.toFixed(2)}
+              </p>
+            </div>
+          )
+        })}
+        <Footer />
       </Navbar>
     </div>
   )
 }
-
