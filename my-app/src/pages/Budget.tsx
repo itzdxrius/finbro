@@ -1,3 +1,6 @@
+
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { saveBudgetGoal } from '../lib/budget'
@@ -27,6 +30,7 @@ export default function Budget() {
 
   return (
     <div>
+      <Navbar/>
       <h2>Budget Goals</h2>
       <input
         type="text"
@@ -41,6 +45,8 @@ export default function Budget() {
         onChange={(e) => setMonthlyLimit(e.target.value)}
       />
       <button onClick={handleSave}>Save Goal</button>
+      <Footer/>
     </div>
   )
 }
+

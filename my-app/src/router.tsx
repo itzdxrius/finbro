@@ -4,9 +4,10 @@ import Budget from "./pages/Budget"
 import Dashboard from "./pages/Dashboard"
 import Setting from "./pages/Setting"
 import History from "./pages/History"
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, Navigate} from "react-router-dom";
 
 export const router = createBrowserRouter([
+    {path:"/", element:<Navigate to="/dashboard" replace/>},
     {path:"/login", element:<Login/>},
     {path:"/dashboard", element:<Dashboard/>},
     {path:"/register", element:<Register/>},

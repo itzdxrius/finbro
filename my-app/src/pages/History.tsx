@@ -1,3 +1,9 @@
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+
 export default function History(){
-    return(<div></div>);
+    return(<div>
+        <Navbar/>
+        <Footer/>
+    </div>);
 }
