@@ -1,37 +1,92 @@
-
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { useState } from 'react'
-import { supabase } from '../lib/supabase'
-import { saveBudgetGoal } from '../lib/budget'
-
-import {BudgetCard} from "@/pages/BudgetCard"
-import {ShoppingCart, Car, ShoppingBag, UtensilsCrossed, Zap, Drama} from "lucide-react"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import { supabase } from "../lib/supabase"
+import { getBudgets, type Budget } from "../lib/budget"
+import { getSpendingByCategory } from "../lib/transaction"
+import { BudgetCard } from "@/pages/BudgetCard"
+import {
+  ShoppingCart,
+  Car,
+  ShoppingBag,
+  UtensilsCrossed,
+  Zap,
+  Drama,
+  Home,
+  HeartPulse,
+  Wallet,
+  MoreHorizontal,
+  type LucideIcon,
+} from "lucide-react"
 import "./budgetcard.css"
 
-const budgets = [
-  { icon: ShoppingCart, category: "Groceries", target: 800, spent: 420.5 },
-  { icon: Car, category: "Transport", target: 350, spent: 318 },
-  { icon: ShoppingBag, category: "Shopping", target: 400, spent: 512.45 },
-  { icon: UtensilsCrossed, category: "Dining", target: 600, spent: 180 },
-  { icon: Zap, category: "Utilities", target: 450, spent: 345 },
-  { icon: Drama, category: "Leisure", target: 200, spent: 174 },
-]
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Groceries: ShoppingCart,
+  Transportation: Car,
+  Shopping: ShoppingBag,
+  Dining: UtensilsCrossed,
+  Utilities: Zap,
+  Entertainment: Drama,
+  Housing: Home,
+  Health: HeartPulse,
+  Income: Wallet,
+  Other: MoreHorizontal,
+}
+
 export default function Budget() {
+  const [budgets, setBudgets] = useState<Budget[]>([])
+  const [spending, setSpending] = useState<Record<string, number>>({})
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    async function load() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+
+      if (!user) return
+
+      try {
+        const [budgetData, spendingData] = await Promise.all([
+          getBudgets(user.id),
+          getSpendingByCategory(user.id),
+        ])
+
+        if (budgetData.length === 0) {
+          navigate("/setting")
+          return
+        }
+
+        setBudgets(budgetData)
+        setSpending(spendingData)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    load()
+  }, [navigate])
+
   return (
     <div>
       <Navbar>
-        <div className ="budget-content">
-        <h2>Budget Goals</h2>
-        <div className="budget-grid">
-          {budgets.map((b) => (
-            <BudgetCard key={b.category} {...b} />
-          ))}
-        </div>
+        <div className="budget-content">
+          <h2>Budget Goals</h2>
+          <div className="budget-grid">
+            {budgets.map((budget) => (
+              <BudgetCard
+                key={budget.id}
+                icon={CATEGORY_ICONS[budget.category] ?? MoreHorizontal}
+                category={budget.category}
+                target={budget.monthly_limit}
+                spent={spending[budget.category] ?? 0}
+              />
+            ))}
+          </div>
         </div>
         <Footer />
       </Navbar>
     </div>
   )
 }
-

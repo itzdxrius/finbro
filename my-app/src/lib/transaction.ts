@@ -9,8 +9,7 @@ export interface PlaidTransaction {
   merchant_name: string | null;
 }
 
-// Our transactions table links to our own accounts.id, not Plaid's account id,
-// so every save needs to look up the row for the user's (single) linked account first.
+// transactions table links to our own accounts.id, not Plaid's account id
 async function getAccountId(userId: string): Promise<string> {
   const { data: account, error } = await supabase
     .from("accounts")
@@ -39,7 +38,7 @@ export async function saveTransactions(userId: string, plaidTransactions: PlaidT
   if (error) throw error;
 }
 
-// Saves a manually-entered expense (no Plaid transaction behind it, category typed by the user).
+
 export async function saveExpense(
   userId: string,
   merchantName: string,
@@ -59,4 +58,27 @@ export async function saveExpense(
   });
 
   if (error) throw error;
+}
+
+// Sums this month's transaction amounts by category
+export async function getSpendingByCategory(userId: string): Promise<Record<string, number>> {
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
+  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString().slice(0, 10);
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("category, amount")
+    .eq("user_id", userId)
+    .gte("date", monthStart)
+    .lt("date", monthEnd);
+
+  if (error) throw error;
+
+  const totals: Record<string, number> = {};
+  for (const tx of data) {
+    if (!tx.category) continue;
+    totals[tx.category] = (totals[tx.category] ?? 0) + tx.amount;
+  }
+  return totals;
 }
