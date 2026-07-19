@@ -60,7 +60,27 @@ export async function saveExpense(
   if (error) throw error;
 }
 
-// Sums this month's transaction amounts by category
+export interface Transaction {
+  id: string;
+  merchant_name: string;
+  amount: number;
+  date: string;
+  category: string | null;
+}
+
+// all of a user's transactions, most recent first
+export async function getTransactions(userId: string): Promise<Transaction[]> {
+  const { data, error } = await supabase
+    .from("transactions")
+    .select("id, merchant_name, amount, date, category")
+    .eq("user_id", userId)
+    .order("date", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
+// sums this month's transaction amounts by category
 export async function getSpendingByCategory(userId: string): Promise<Record<string, number>> {
   const now = new Date();
   const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
