@@ -5,6 +5,34 @@ import Footer from "./Footer"
 import { supabase } from "../lib/supabase"
 import { getBudgets, type Budget } from "../lib/budget"
 import { getSpendingByCategory } from "../lib/transaction"
+import { BudgetCard } from "@/pages/BudgetCard"
+import {
+  ShoppingCart,
+  Car,
+  ShoppingBag,
+  UtensilsCrossed,
+  Zap,
+  Drama,
+  Home,
+  HeartPulse,
+  Wallet,
+  MoreHorizontal,
+  type LucideIcon,
+} from "lucide-react"
+import "./budgetcard.css"
+
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Groceries: ShoppingCart,
+  Transportation: Car,
+  Shopping: ShoppingBag,
+  Dining: UtensilsCrossed,
+  Utilities: Zap,
+  Entertainment: Drama,
+  Housing: Home,
+  Health: HeartPulse,
+  Income: Wallet,
+  Other: MoreHorizontal,
+}
 
 export default function Budget() {
   const [budgets, setBudgets] = useState<Budget[]>([])
@@ -43,18 +71,20 @@ export default function Budget() {
   return (
     <div>
       <Navbar>
-        <h2>Budgets</h2>
-        {budgets.map((budget) => {
-          const spent = spending[budget.category] ?? 0
-          return (
-            <div key={budget.id}>
-              <p>{budget.category}</p>
-              <p>
-                ${spent.toFixed(2)} of ${budget.monthly_limit.toFixed(2)}
-              </p>
-            </div>
-          )
-        })}
+        <div className="budget-content">
+          <h2>Budget Goals</h2>
+          <div className="budget-grid">
+            {budgets.map((budget) => (
+              <BudgetCard
+                key={budget.id}
+                icon={CATEGORY_ICONS[budget.category] ?? MoreHorizontal}
+                category={budget.category}
+                target={budget.monthly_limit}
+                spent={spending[budget.category] ?? 0}
+              />
+            ))}
+          </div>
+        </div>
         <Footer />
       </Navbar>
     </div>
