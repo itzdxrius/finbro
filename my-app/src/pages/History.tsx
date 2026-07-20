@@ -95,9 +95,6 @@ export default function History() {
         })
     }, [transactions, search, category, dateFrom, dateTo])
 
-    useEffect(() => {
-        setPage(1)
-    }, [search, category, dateFrom, dateTo])
 //filtered.length / PAGE_SIZE gives a decimal (e.g. 23 results / 10 = 2.3 pages). Math.ceil rounds that up to 3, because a partial page still counts as a page. Math.max(1, ...) makes sure we never show "0 pages" even if the list is empty — there's always at least 1 (empty) page.
     const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
     const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
@@ -121,11 +118,20 @@ export default function History() {
                             <Input
                                 placeholder="Search entries..."
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    setSearch(e.target.value)
+                                    setPage(1)
+                                }}
                                 className="pl-8"
                             />
                         </div>
-                        <Select value={category} onValueChange={setCategory}>
+                        <Select
+                            value={category}
+                            onValueChange={(value) => {
+                                setCategory(value ?? ALL_CATEGORIES)
+                                setPage(1)
+                            }}
+                        >
                             <SelectTrigger>
                                 <SelectValue />
                             </SelectTrigger>
@@ -157,7 +163,10 @@ export default function History() {
                                         <Input
                                             type="date"
                                             value={dateFrom}
-                                            onChange={(e) => setDateFrom(e.target.value)}
+                                            onChange={(e) => {
+                                                setDateFrom(e.target.value)
+                                                setPage(1)
+                                            }}
                                         />
                                     </label>
                                     <label className="flex flex-col gap-1 text-xs text-muted-foreground">
@@ -165,7 +174,10 @@ export default function History() {
                                         <Input
                                             type="date"
                                             value={dateTo}
-                                            onChange={(e) => setDateTo(e.target.value)}
+                                            onChange={(e) => {
+                                                setDateTo(e.target.value)
+                                                setPage(1)
+                                            }}
                                         />
                                     </label>
                                     {(dateFrom || dateTo) && (
@@ -175,6 +187,7 @@ export default function History() {
                                             onClick={() => {
                                                 setDateFrom("")
                                                 setDateTo("")
+                                                setPage(1)
                                             }}
                                         >
                                             Clear
