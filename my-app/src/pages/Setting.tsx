@@ -5,6 +5,10 @@ import { supabase } from "../lib/supabase"
 import { saveBudgetGoal } from "../lib/budget"
 import { CATEGORIES } from "../lib/categories"
 
+import {Card,CardContent,CardHeader,CardTitle} from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import "./setting.css"
+
 export default function Setting() {
   const [category, setCategory] = useState<string>(CATEGORIES[0])
   const [monthlyLimit, setMonthlyLimit] = useState<string>("")
@@ -46,24 +50,41 @@ export default function Setting() {
   return (
     <div>
       <Navbar>
-        <h1>{name}</h1>
-        <h2>Budget Goals</h2>
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {CATEGORIES.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          placeholder="Monthly limit"
-          value={monthlyLimit}
-          onChange={(e) => setMonthlyLimit(e.target.value)}
-        />
-        <button onClick={handleSave}>Save Goal</button>
-        <Footer />
-      </Navbar>
-    </div>
+        <div className = "settings-content">
+          <Card className="profile-card">
+            <CardContent className="profile-card-content">
+              <img
+                src="/profile-picture.webp"
+                alt="Profile"
+                className="profile-card-image"
+              />
+              <p className="profile-card-email">E-mail Address: {name}</p>
+            </CardContent>
+          </Card>
+          <Card className = "settings-card">
+              <CardHeader>
+                <CardTitle>Budget Goals</CardTitle>
+              </CardHeader>
+              <CardContent className = "settings-card-content">
+                <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                  {CATEGORIES.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  placeholder="Monthly limit"
+                  value={monthlyLimit}
+                  onChange={(e) => setMonthlyLimit(e.target.value)}
+                />
+                <Button onClick={handleSave}>Save Goal</Button>
+              </CardContent>
+            </Card>
+          </div>
+          <Footer />
+        </Navbar>
+      </div>
   )
 }

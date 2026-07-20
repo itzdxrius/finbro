@@ -50,3 +50,11 @@
     border-radius: 0.75rem;
     border: 1px solid #d1d5db;
 }
+
+.add-expense-button{
+    margin: 30px;
+}
+
+.add-expense-date-selector{
+    margin:20px;
+}
