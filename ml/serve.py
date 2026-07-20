@@ -5,7 +5,7 @@ the Node backend in my-app/server) can get predictions over HTTP instead of
 calling Python directly.
 
 Run with:
-    uvicorn serve:app --reload --port 8000
+    uvicorn serve:app --reload --port 8001
 
 Then POST to http://localhost:8000/predict with a JSON body like:
     {"texts": ["Uber ride INR 250", "Netflix subscription INR 499"]}

@@ -7,23 +7,30 @@ import { getBudgets, type Budget } from "../lib/budget"
 import { getSpendingByCategory } from "../lib/transaction"
 import { BudgetCard } from "@/pages/BudgetCard"
 import {
-  ShoppingCart,
-  Car,
-  UtensilsCrossed,
+  GraduationCap,
+  Landmark,
   Drama,
-  Home,
+  UtensilsCrossed,
+  HeartPulse,
+  TrendingUp,
+  ShoppingBag,
+  Plane,
+  Zap,
   MoreHorizontal,
   type LucideIcon,
 } from "lucide-react"
 import "./budgetcard.css"
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  Groceries: ShoppingCart,
-  Transportation: Car,
-  Dining: UtensilsCrossed,
-  Entertainment: Drama,
-  Housing: Home,
-  Misc: MoreHorizontal,
+  education: GraduationCap,
+  emi: Landmark,
+  entertainment: Drama,
+  food: UtensilsCrossed,
+  healthcare: HeartPulse,
+  investment: TrendingUp,
+  shopping: ShoppingBag,
+  travel: Plane,
+  utilities: Zap,
 }
 
 export default function Budget() {

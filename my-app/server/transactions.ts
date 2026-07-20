@@ -28,3 +28,9 @@ export async function sync_transactions(access_token:string, cursor:string|null)
     return transactions;
 }
 
+export async function categorize_transactions(names: string[]) {
+    const response = await axios.post("http://localhost:8001/predict", { texts: names });
+    return response.data; // [{ category, confidence }, ...] — same order as `names`
+}
+
+

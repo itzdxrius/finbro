@@ -1,5 +1,5 @@
 import { initialize_plaid_account } from "./plaidapi";
-import { sync_transactions } from "./transactions";
+import { sync_transactions, categorize_transactions } from "./transactions";
 import { supabase } from "./supabase";
 
 interface PlaidTransaction {
@@ -37,14 +37,20 @@ async function linkAccount(userId: string, username: string, password: string) {
         .single();
 
     if (accountError) throw accountError;
+    
 
-    const rows = synced.added.map((tx: PlaidTransaction) => ({
+    const names = synced.added.map((tx: PlaidTransaction) => tx.merchant_name ?? tx.name);
+    const categories = await categorize_transactions(names);
+    
+
+    const rows = synced.added.map((tx: PlaidTransaction,i:number) => ({
         user_id: userId,
         account_id: accountRow.id,
         plaid_transaction_id: tx.transaction_id,
         merchant_name: tx.merchant_name ?? tx.name,
         amount: tx.amount,
         date: tx.date,
+        category: categories[i].category
     }));
 
     if (rows.length > 0) {
