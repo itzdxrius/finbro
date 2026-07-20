@@ -12,7 +12,7 @@ interface PlaidTransaction {
 
 async function linkAccount(userId: string, username: string, password: string) {
     const accessToken = await initialize_plaid_account(username, password);
-    const synced = await sync_transactions(accessToken);
+    const synced = await sync_transactions(accessToken, null);
 
     const account = synced.accounts[0];
     if (!account) {
