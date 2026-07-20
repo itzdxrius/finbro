@@ -41,12 +41,8 @@ const CATEGORY_ICONS: Record<string, typeof CircleDollarSign> = {
     Dining: UtensilsCrossed,
     Transportation: Car,
     Housing: Home,
-    Utilities: Zap,
     Entertainment: Film,
-    Shopping: ShoppingBag,
-    Health: HeartPulse,
-    Income: TrendingUp,
-    Other: CircleDollarSign,
+    Misc: CircleDollarSign,
 }
 //rows per page
 const PAGE_SIZE = 10

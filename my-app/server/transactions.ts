@@ -2,7 +2,7 @@ import axios from "axios";
 import "dotenv/config";
 
 const TRANSACTIONS_URL = "https://sandbox.plaid.com/transactions/sync";
-async function sync_transactions_plaid(access_token, cursor) {
+async function sync_transactions_plaid(access_token:string, cursor:string|null) {
         
     const transactions_post_data = {
         client_id: process.env.PLAID_CLIENT_ID,
@@ -14,15 +14,18 @@ async function sync_transactions_plaid(access_token, cursor) {
     return transactions.data;
 }
 
-export async function sync_transactions(access_token, cursor) {
-    for (let attempt = 1; attempt <=3; attempt++) {
-        const transactions = await sync_transactions_plaid(access_token, cursor)
-        if (transactions.transactions_update_status !== "NOT_READY") {
-            return transactions;
+export async function sync_transactions(access_token:string, cursor:string|null) {
+    const timeout = 60000
+    const start = Date.now()
+    let transactions = await sync_transactions_plaid(access_token, cursor)
+    while (transactions.transactions_update_status == "NOT_READY") {
+        if (Date.now() - start >= timeout) {
+            throw new Error("Transactions failed to become ready")
         }
+        transactions = await sync_transactions_plaid(access_token, cursor)
         await new Promise(resolve => setTimeout(resolve, 5000));
     }
-    throw new Error("Transactions Failed to become ready");
+    return transactions;
 }
 
 export async function categorize_transactions(names: string[]) {
