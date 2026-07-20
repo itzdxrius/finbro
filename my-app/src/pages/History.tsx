@@ -24,25 +24,28 @@ import {
 import {
     Search,
     Calendar,
-    ShoppingCart,
+    GraduationCap,
+    Landmark,
     UtensilsCrossed,
-    Car,
-    Home,
     Zap,
     Film,
     ShoppingBag,
     HeartPulse,
     TrendingUp,
+    Plane,
     CircleDollarSign,
 } from "lucide-react"
 
 const CATEGORY_ICONS: Record<string, typeof CircleDollarSign> = {
-    Groceries: ShoppingCart,
-    Dining: UtensilsCrossed,
-    Transportation: Car,
-    Housing: Home,
-    Entertainment: Film,
-    Misc: CircleDollarSign,
+    education: GraduationCap,
+    emi: Landmark,
+    entertainment: Film,
+    food: UtensilsCrossed,
+    healthcare: HeartPulse,
+    investment: TrendingUp,
+    shopping: ShoppingBag,
+    travel: Plane,
+    utilities: Zap,
 }
 //rows per page
 const PAGE_SIZE = 10
