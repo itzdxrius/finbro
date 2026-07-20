@@ -2,7 +2,7 @@ import axios from "axios";
 import "dotenv/config";
 
 const TRANSACTIONS_URL = "https://sandbox.plaid.com/transactions/sync";
-async function sync_transactions_plaid(access_token, cursor) {
+async function sync_transactions_plaid(access_token:string, cursor:string|null) {
         
     const transactions_post_data = {
         client_id: process.env.PLAID_CLIENT_ID,
@@ -14,7 +14,7 @@ async function sync_transactions_plaid(access_token, cursor) {
     return transactions.data;
 }
 
-export async function sync_transactions(access_token, cursor) {
+export async function sync_transactions(access_token:string, cursor:string|null) {
     const timeout = 60000
     const start = Date.now()
     let transactions = await sync_transactions_plaid(access_token, cursor)

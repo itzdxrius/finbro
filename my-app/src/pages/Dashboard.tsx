@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./dashboard.css";
@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChartPieInteractive } from "./Piechart";
 import { supabase } from "../lib/supabase";
-import { saveExpense } from "../lib/transaction";
+import { saveExpense, getAccountBalance } from "../lib/transaction";
 import { CATEGORIES } from "../lib/categories";
 
 function todayISO() {
@@ -19,7 +19,26 @@ function todayISO() {
 }
 
 export default function Dashboard() {
-    const balance = 0;
+    const [balance, setBalance] = useState<number>(0);
+
+    useEffect(() => {
+        async function loadBalance() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (!user) return;
+
+            try {
+                const bal = await getAccountBalance(user.id);
+                setBalance(bal);
+            } catch {
+                // no linked account yet, leave balance at 0
+            }
+        }
+
+        loadBalance();
+    }, []);
 
     const [merchantName, setMerchantName] = useState<string>("");
     const [amount, setAmount] = useState<string>("");

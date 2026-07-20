@@ -21,6 +21,17 @@ async function getAccountId(userId: string): Promise<string> {
   return account.id;
 }
 
+export async function getAccountBalance(userId: string): Promise<number> {
+  const { data, error } = await supabase
+    .from("accounts")
+    .select("current_balance")
+    .eq("user_id", userId)
+    .single();
+
+  if (error) throw error;
+  return data.current_balance;
+}
+
 // Takes the transactions Plaid returns for a user and saves them to our transactions table.
 export async function saveTransactions(userId: string, plaidTransactions: PlaidTransaction[]) {
   const accountId = await getAccountId(userId);
