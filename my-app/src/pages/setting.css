@@ -1,0 +1,77 @@
+.settings-content {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  max-width: 100rem;
+  width: 100%;
+  padding: 50px 80px;
+}
+
+.profile-card,
+.settings-card {
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+  min-height: 480px;
+  margin: 1.5rem;
+}
+
+.profile-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+  text-align: center;
+  font-size: 1.125rem;
+}
+
+.profile-card-image {
+  height: 9rem;
+  width: 9rem;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+.profile-card-email {
+  color: var(--muted-foreground);
+  font-size: 1.25rem;
+  padding:80px;
+}
+
+.settings-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1rem 2rem 2rem;
+  font-size: 1.125rem;
+
+}
+
+.settings-card-content select,
+.settings-card-content input {
+  font-size: 1.125rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--input);
+  color: var(--foreground);
+}
+
+.settings-card-content input[type="number"]::-webkit-outer-spin-button,
+.settings-card-content input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.settings-card-content input[type="number"] {
+  -moz-appearance: textfield;
+}

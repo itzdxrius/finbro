@@ -113,7 +113,7 @@ export default function Dashboard() {
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                             />
-                            <input
+                            <input className = "add-expense-date-selector"
                                 type="date"
                                 value={date}
                                 onChange={(e) => setDate(e.target.value)}
@@ -125,7 +125,7 @@ export default function Dashboard() {
                                     </option>
                                 ))}
                             </select>
-                            <Button onClick={handleAddExpense}>
+                            <Button className = "add-expense-button" onClick={handleAddExpense}>
                                 Add Expense
                             </Button>
                             {status && <p>{status}</p>}

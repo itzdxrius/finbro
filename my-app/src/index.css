@@ -11,6 +11,7 @@
 /* FinBro theme — dark-only design:
    Primary #6D28D9 / Secondary #9CA3AF / Tertiary #050505 / Neutral #FFFFFF */
 :root {
+  color-scheme: dark;
   --background:#050505;
   --foreground:#ffffff;
   --card:#131316;
@@ -103,6 +104,10 @@
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+  select, option {
+    background-color: var(--card);
+    color: var(--foreground);
   }
 }
 
