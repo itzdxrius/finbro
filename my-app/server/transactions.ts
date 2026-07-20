@@ -15,14 +15,16 @@ async function sync_transactions_plaid(access_token, cursor) {
 }
 
 export async function sync_transactions(access_token, cursor) {
-    for (let attempt = 1; attempt <=3; attempt++) {
-        const transactions = await sync_transactions_plaid(access_token, cursor)
-        if (transactions.transactions_update_status !== "NOT_READY") {
-            return transactions;
+    const timeout = 60000
+    const start = Date.now()
+    let transactions = await sync_transactions_plaid(access_token, cursor)
+    while (transactions.transactions_update_status == "NOT_READY") {
+        if (Date.now() - start >= timeout) {
+            throw new Error("Transactions failed to become ready")
         }
+        transactions = await sync_transactions_plaid(access_token, cursor)
         await new Promise(resolve => setTimeout(resolve, 5000));
     }
-    throw new Error("Transactions Failed to become ready");
+    return transactions;
 }
-
 
