@@ -231,11 +231,11 @@ export default function History() {
                                                 <span
                                                     className={
                                                         "text-right text-sm font-medium " +
-                                                        (tx.amount > 0 ? "text-green-500" : "text-foreground")
+                                                        (tx.amount < 0 ? "text-green-500" : "text-foreground")
                                                     }
                                                 >
-                                                    {tx.amount > 0 ? "+" : ""}
-                                                    ${tx.amount.toFixed(2)}
+                                                    {tx.amount < 0 ? "+" : "-"}
+                                                    ${Math.abs(tx.amount).toFixed(2)}
                                                 </span>
                                             </div>
                                         )
