@@ -9,13 +9,9 @@ import { BudgetCard } from "@/pages/BudgetCard"
 import {
   ShoppingCart,
   Car,
-  ShoppingBag,
   UtensilsCrossed,
-  Zap,
   Drama,
   Home,
-  HeartPulse,
-  Wallet,
   MoreHorizontal,
   type LucideIcon,
 } from "lucide-react"
@@ -24,14 +20,10 @@ import "./budgetcard.css"
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
   Groceries: ShoppingCart,
   Transportation: Car,
-  Shopping: ShoppingBag,
   Dining: UtensilsCrossed,
-  Utilities: Zap,
   Entertainment: Drama,
   Housing: Home,
-  Health: HeartPulse,
-  Income: Wallet,
-  Other: MoreHorizontal,
+  Misc: MoreHorizontal,
 }
 
 export default function Budget() {

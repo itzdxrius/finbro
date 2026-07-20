@@ -3,12 +3,8 @@ export const CATEGORIES = [
   "Dining",
   "Transportation",
   "Housing",
-  "Utilities",
   "Entertainment",
-  "Shopping",
-  "Health",
-  "Income",
-  "Other",
+  "Misc",
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];
