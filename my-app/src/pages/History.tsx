@@ -17,7 +17,13 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import {
     Search,
+    Calendar,
     ShoppingCart,
     UtensilsCrossed,
     Car,
@@ -51,6 +57,8 @@ export default function History() {
     const [status, setStatus] = useState<string>("Loading...")
     const [search, setSearch] = useState<string>("")
     const [category, setCategory] = useState<string>(ALL_CATEGORIES)
+    const [dateFrom, setDateFrom] = useState<string>("")
+    const [dateTo, setDateTo] = useState<string>("")
     const [page, setPage] = useState<number>(1)
 
     useEffect(() => {
@@ -81,13 +89,15 @@ export default function History() {
         return transactions.filter((tx) => {
             const matchesSearch = !query || tx.merchant_name.toLowerCase().includes(query)
             const matchesCategory = category === ALL_CATEGORIES || tx.category === category
-            return matchesSearch && matchesCategory
+            const matchesDateFrom = !dateFrom || tx.date >= dateFrom
+            const matchesDateTo = !dateTo || tx.date <= dateTo
+            return matchesSearch && matchesCategory && matchesDateFrom && matchesDateTo
         })
-    }, [transactions, search, category])
+    }, [transactions, search, category, dateFrom, dateTo])
 
     useEffect(() => {
         setPage(1)
-    }, [search, category])
+    }, [search, category, dateFrom, dateTo])
 //filtered.length / PAGE_SIZE gives a decimal (e.g. 23 results / 10 = 2.3 pages). Math.ceil rounds that up to 3, because a partial page still counts as a page. Math.max(1, ...) makes sure we never show "0 pages" even if the list is empty — there's always at least 1 (empty) page.
     const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
     const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
@@ -128,6 +138,51 @@ export default function History() {
                                 ))}
                             </SelectContent>
                         </Select>
+
+                        <DropdownMenu>
+                            <DropdownMenuTrigger
+                                render={
+                                    <Button variant="outline" size="sm">
+                                        <Calendar className="size-4" />
+                                        {dateFrom || dateTo
+                                            ? `${dateFrom || "..."} to ${dateTo || "..."}`
+                                            : "Date Range"}
+                                    </Button>
+                                }
+                            />
+                            <DropdownMenuContent className="w-auto p-3">
+                                <div className="flex flex-col gap-2">
+                                    <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+                                        From
+                                        <Input
+                                            type="date"
+                                            value={dateFrom}
+                                            onChange={(e) => setDateFrom(e.target.value)}
+                                        />
+                                    </label>
+                                    <label className="flex flex-col gap-1 text-xs text-muted-foreground">
+                                        To
+                                        <Input
+                                            type="date"
+                                            value={dateTo}
+                                            onChange={(e) => setDateTo(e.target.value)}
+                                        />
+                                    </label>
+                                    {(dateFrom || dateTo) && (
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={() => {
+                                                setDateFrom("")
+                                                setDateTo("")
+                                            }}
+                                        >
+                                            Clear
+                                        </Button>
+                                    )}
+                                </div>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
 
                     {status && <p className="text-sm text-muted-foreground">{status}</p>}
