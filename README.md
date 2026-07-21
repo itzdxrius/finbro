@@ -14,7 +14,7 @@ A personal finance web app that links to your bank account, categorizes your spe
 
 ## Tech Stack
 
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS, react-router-dom, Recharts
+- **Frontend:** React, TypeScript, Vite, CSS, react-router-dom, Recharts
 - **Backend:** Supabase (Postgres, Auth, Row-Level Security)
 - **Integrations:** Plaid (bank data), Gemini API (transaction categorization)
 - **Deploy:** Vercel
