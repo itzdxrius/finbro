@@ -22,15 +22,15 @@ import {
 import "./budgetcard.css"
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  education: GraduationCap,
-  emi: Landmark,
-  entertainment: Drama,
-  food: UtensilsCrossed,
-  healthcare: HeartPulse,
-  investment: TrendingUp,
-  shopping: ShoppingBag,
-  travel: Plane,
-  utilities: Zap,
+  Education: GraduationCap,
+  Emi: Landmark,
+  Entertainment: Drama,
+  Food: UtensilsCrossed,
+  Healthcare: HeartPulse,
+  Investment: TrendingUp,
+  Shopping: ShoppingBag,
+  Travel: Plane,
+  Utilities: Zap,
 }
 
 export default function Budget() {
