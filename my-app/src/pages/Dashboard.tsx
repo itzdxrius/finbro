@@ -97,6 +97,12 @@ export default function Dashboard() {
     return(
         <div>
             <Navbar>
+            <div className="flex flex-col gap-4 p-4">
+                <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                    Overview
+                </p>
+                <h1 className="font-heading text-2xl font-semibold">Dashboard</h1>
+            </div>
             <div className="dashboard-content">
             <div className="dashboard-grid">
                 <Card className="chart-card">
