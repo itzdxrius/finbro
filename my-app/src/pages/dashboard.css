@@ -18,7 +18,7 @@
 .chart-card {
     grid-row: span 2 / span 2;
     border-radius: 0.75rem;
-    border: 1px solid #d1d5db;
+    
 }
 
 .summary-column {
@@ -31,13 +31,13 @@
 .balance-card {
     flex: 1 1 0%;
     border-radius: 0.75rem;
-    border: 1px solid #d1d5db;
+    
 }
 
 .ai-summary-card {
     flex: 2 1 0%;
     border-radius: 0.75rem;
-    border: 1px solid #d1d5db;
+    
 }
 
 .balance-card p {
@@ -48,7 +48,7 @@
 .add-expense-card {
     flex: 2 1 0%;
     border-radius: 0.75rem;
-    border: 1px solid #d1d5db;
+    
 }
 
 .add-expense-button{
