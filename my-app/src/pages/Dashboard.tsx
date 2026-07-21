@@ -86,7 +86,7 @@ export default function Dashboard() {
 
         try {
             const transactions = await getTransactions(user.id);
-            const result = await generateSummary(transactions);
+            const result = await generateSummary(transactions, balance);
             setSummary(result);
         } catch (error) {
             setSummary(error instanceof Error ? error.message : "Failed to generate summary.");
@@ -154,13 +154,13 @@ export default function Dashboard() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <input
+                            <input className ="add-expense-field"
                                 type="text"
                                 placeholder="Merchant"
                                 value={merchantName}
                                 onChange={(e) => setMerchantName(e.target.value)}
                             />
-                            <input
+                            <input className ="add-expense-field"
                                 type="number"
                                 placeholder="Amount"
                                 value={amount}
@@ -181,7 +181,7 @@ export default function Dashboard() {
                             <Button className = "add-expense-button" onClick={handleAddExpense}>
                                 Add Expense
                             </Button>
-                            {status && <p>{status}</p>}
+                            {status && <p className="expense-added-confirmation">{status}</p>}
                         </CardContent>
                     </Card>
                 </div>

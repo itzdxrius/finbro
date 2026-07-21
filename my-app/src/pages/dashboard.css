@@ -53,11 +53,12 @@
 }
 
 .add-expense-button{
-    margin: 30px;
+    margin: 8px 0 8px 30px;
+    padding-left: 10px;
 }
 
 .add-expense-date-selector{
-    margin:20px;
+    margin:8px 0;
 }
 
 .ai-summary-text-scrollable{
@@ -68,4 +69,12 @@
     padding-bottom: 50px;
     margin: 12px;
 
+}
+
+expense-added-confirmation {
+    margin-bottom: 12px;
+}
+
+.add-expense-field {
+    margin-left: 0px;
 }
