@@ -62,7 +62,8 @@ export default function Dashboard() {
         }
 
         try {
-            await saveExpense(user.id, merchantName, Number(amount), date, category);
+            const newBalance = await saveExpense(user.id, merchantName, Number(amount), date, category);
+            setBalance(newBalance);
             setMerchantName("");
             setAmount("");
             setDate(todayISO());

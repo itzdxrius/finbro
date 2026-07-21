@@ -69,6 +69,25 @@ export async function saveExpense(
   });
 
   if (error) throw error;
+
+  const { data: account, error: fetchError } = await supabase
+    .from("accounts")
+    .select("current_balance")
+    .eq("id", accountId)
+    .single();
+
+  if (fetchError) throw fetchError;
+
+  const newBalance = account.current_balance - amount;
+
+  const { error: updateError } = await supabase
+    .from("accounts")
+    .update({ current_balance: newBalance })
+    .eq("id", accountId);
+
+  if (updateError) throw updateError;
+
+  return newBalance;
 }
 
 export interface Transaction {
@@ -108,7 +127,7 @@ export async function getSpendingByCategory(userId: string): Promise<Record<stri
 
   const totals: Record<string, number> = {};
   for (const tx of data) {
-    if (!tx.category) continue;
+    if (!tx.category || tx.amount <= 0) continue;
     totals[tx.category] = (totals[tx.category] ?? 0) + tx.amount;
   }
   return totals;
