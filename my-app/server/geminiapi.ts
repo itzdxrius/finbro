@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
 
-const gemini_key = process.env.gemini_key
+const gemini_key = process.env.VITE_GEMINI_KEY
 const ai = new GoogleGenAI({apiKey: gemini_key});
 
 export async function gemini(data) {
