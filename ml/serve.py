@@ -43,6 +43,6 @@ def predict(request: PredictRequest) -> list[Prediction]:
     categories = model.classes_[top_idx]
     confidences = probs.max(axis=1)
     return [
-        Prediction(category=category, confidence=float(confidence))
+        Prediction(category=category.capitalize(), confidence=float(confidence))
         for category, confidence in zip(categories, confidences)
     ]
