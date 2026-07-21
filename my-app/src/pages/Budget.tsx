@@ -71,7 +71,12 @@ export default function Budget() {
     <div>
       <Navbar>
         <div className="budget-content">
-          <h2>Budget Goals</h2>
+          <div>
+            <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+              Spending Plan
+            </p>
+            <h1 className="font-heading text-2xl font-semibold">Budget Goals</h1>
+          </div>
           <div className="budget-grid">
             {budgets.map((budget) => (
               <BudgetCard
