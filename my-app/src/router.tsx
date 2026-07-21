@@ -7,7 +7,7 @@ import History from "./pages/History"
 import {createBrowserRouter, Navigate} from "react-router-dom";
 
 export const router = createBrowserRouter([
-    {path:"/", element:<Navigate to="/dashboard" replace/>},
+    {path:"/", element:<Navigate to="/login" replace/>},
     {path:"/login", element:<Login/>},
     {path:"/dashboard", element:<Dashboard/>},
     {path:"/register", element:<Register/>},
