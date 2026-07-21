@@ -11,8 +11,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChartPieInteractive } from "./Piechart";
 import { supabase } from "../lib/supabase";
-import { saveExpense, getAccountBalance } from "../lib/transaction";
+import { saveExpense, getAccountBalance, getTransactions } from "../lib/transaction";
 import { CATEGORIES } from "../lib/categories";
+import { generateSummary } from "../lib/gemini";
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -45,6 +46,8 @@ export default function Dashboard() {
     const [date, setDate] = useState<string>(todayISO());
     const [category, setCategory] = useState<string>(CATEGORIES[0]);
     const [status, setStatus] = useState<string>("");
+    const [summary, setSummary] = useState<string>("");
+    const [summaryLoading, setSummaryLoading] = useState<boolean>(false);
 
     async function handleAddExpense() {
         setStatus("");
@@ -67,6 +70,27 @@ export default function Dashboard() {
             setStatus("Expense added.");
         } catch (error) {
             setStatus(error instanceof Error ? error.message : "Failed to add expense.");
+        }
+    }
+    async function handleGenerateSummary() {
+    setSummaryLoading(true);
+    setSummary("");
+
+    const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+            setSummary("You must be logged in.");
+            setSummaryLoading(false);
+            return;
+        }
+
+        try {
+            const transactions = await getTransactions(user.id);
+            const result = await generateSummary(transactions);
+            setSummary(result);
+        } catch (error) {
+            setSummary(error instanceof Error ? error.message : "Failed to generate summary.");
+        } finally {
+            setSummaryLoading(false);
         }
     }
 
@@ -107,9 +131,10 @@ export default function Dashboard() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <Button>
-                                Generate Summary
+                            <Button onClick = {handleGenerateSummary} disabled = {summaryLoading}>
+                                {summaryLoading ? "Generating...": "Generate Summary"}
                             </Button>
+                            {summary && <div className = "ai-summary-text-scrollable">{summary}</div>}
                         </CardContent>
                     </Card>
 
