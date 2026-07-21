@@ -50,6 +50,12 @@ export default function Setting() {
   return (
     <div>
       <Navbar>
+        <div className="flex flex-col gap-4 p-4">
+          <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+            Account
+          </p>
+          <h1 className="font-heading text-2xl font-semibold">Settings</h1>
+        </div>
         <div className = "settings-content">
           <Card className="profile-card">
             <CardContent className="profile-card-content">
