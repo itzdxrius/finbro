@@ -58,3 +58,13 @@
 .add-expense-date-selector{
     margin:20px;
 }
+
+.ai-summary-text-scrollable{
+    max-height: 150px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    padding-top: 12px;
+    padding-bottom: 50px;
+    margin: 12px;
+
+}
